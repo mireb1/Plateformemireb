@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mireb Commercial - Plateforme E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6a00;
+            --secondary: #0056b3;
+            --dark: #333;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border: #dee2e6;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .top-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            background: white;
+            color: var(--primary);
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .top-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .option-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            min-width: 150px;
+            display: none;
+            z-index: 101;
+        }
+
+        .option:hover .option-dropdown {
+            display: block;
+        }
+
+        .option-item {
+            padding: 10px 15px;
+            color: var(--dark);
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .option-item:hover {
+            background: var(--light);
+        }
+
+        .option-item.active {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .search-container {
+            padding: 10px 15px;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--primary);
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Stories Section */
+        .stories {
+            padding: 20px 15px;
+            background: white;
+            margin: 10px 0;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .stories-container {
+            display: flex;
+            gap: 15px;
+            min-width: max-content;
+        }
+
+        .story {
+            width: 100px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .story img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 5px;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* Products Section */
+        .section-title {
+            padding: 10px 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            padding: 0 15px 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #e9ecef;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 12px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+            flex: 1;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            margin: 20px 15px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, 
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .delivery-info {
+            background: #e8f4ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .delivery-info p {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .delivery-info .total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: #218838;
+        }
+
+        /* Admin Interface */
+        .admin-panel {
+            background: white;
+            margin: 20px 15px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .admin-header {
+            background: var(--dark);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .admin-tabs {
+            display: flex;
+            background: var(--light-gray);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .admin-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .admin-tab.active {
+            border-bottom: 3px solid var(--primary);
+            background: white;
+            font-weight: 500;
+        }
+
+        .admin-content {
+            padding: 20px;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .admin-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-card h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .admin-card ul {
+            list-style: none;
+        }
+
+        .admin-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .admin-card li:last-child {
+            border-bottom: none;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .theme-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .theme-option.active {
+            border-color: var(--dark);
+        }
+
+        .theme-option.blue { background: linear-gradient(45deg, #1e88e5, #0d47a1); }
+        .theme-option.orange { background: linear-gradient(45deg, #ff9800, #f57c00); }
+        .theme-option.green { background: linear-gradient(45deg, #4caf50, #2e7d32); }
+        .theme-option.red { background: linear-gradient(45deg, #f44336, #d32f2f); }
+
+        /* Categories Section */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 15px 10px;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--light);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .category-name {
+            font-weight: 500;
+        }
+
+        /* Login Form */
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .login-error {
+            color: var(--danger);
+            text-align: center;
+            margin: 10px 0;
+            display: none;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-top: 1px solid var(--border);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 0;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item span {
+            font-size: 0.8rem;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .page {
+            padding-bottom: 70px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .switch-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .switch-btn {
+            background: var(--light-gray);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .switch-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            text-align: center;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .logo {
+                font-size: 1.4rem;
+            }
+            
+            .top-options {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .option span {
+                display: none;
+            }
+            
+            .option i {
+                font-size: 1.2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .admin-tabs {
+                font-size: 0.9rem;
+            }
+            
+            .admin-tab {
+                padding: 10px 15px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .story {
+                width: 80px;
+                height: 120px;
+            }
+            
+            .product-image {
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-item {
+                padding: 5px 10px;
+            }
+            
+            .nav-item span {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <span>Mireb Commercial</span>
+        </div>
+        <div class="top-options">
+            <div class="option">
+                <i class="fas fa-globe"></i>
+                <span>Français</span>
+                <div class="option-dropdown">
+                    <div class="option-item active">Français</div>
+                    <div class="option-item">English</div>
+                    <div class="option-item">Swahili</div>
+                    <div class="option-item">Lingala</div>
+                </div>
+            </div>
+            <div class="option">
+                <i class="fas fa-dollar-sign"></i>
+                <span>FC</span>
+                <div class="option-dropdown">
+                    <div class="option-item active">Franc Congolais (FC)</div>
+                    <div class="option-item">Dollar US ($)</div>
+                    <div class="option-item">Euro (€)</div>
+                </div>
+            </div>
+            <div class="option">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kinshasa</span>
+                <div class="option-dropdown">
+                    <div class="option-item active">Kinshasa</div>
+                    <div class="option-item">Lubumbashi</div>
+                    <div class="option-item">Goma</div>
+                    <div class="option-item">Mbuji-Mayi</div>
+                </div>
+            </div>
+            <div class="option">
+                <i class="fas fa-truck"></i>
+                <span>Fournisseur</span>
+                <div class="option-dropdown">
+                    <div class="option-item active">Tous les fournisseurs</div>
+                    <div class="option-item">Premium Gold</div>
+                    <div class="option-item">ElectroPro</div>
+                    <div class="option-item">Fashion House</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Rechercher des produits, fournisseurs...">
+            <button id="search-btn"><i class="fas fa-search"></i> Rechercher</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Stories Section -->
+        <div class="stories">
+            <div class="stories-container">
+                <div class="story">
+                    <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=100&h=150" alt="Soldes">
+                    <div class="story-title">Soldes -50%</div>
+                </div>
+                <div class="story">
+                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=100&h=150" alt="Nouveautés">
+                    <div class="story-title">Nouveautés</div>
+                </div>
+                <div class="story">
+                    <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=100&h=150" alt="Électronique">
+                    <div class="story-title">Électronique</div>
+                </div>
+                <div class="story">
+                    <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=100&h=150" alt="Mode">
+                    <div class="story-title">Mode</div>
+                </div>
+                <div class="story">
+                    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=100&h=150" alt="Maison">
+                    <div class="story-title">Maison</div>
+                </div>
+                <div class="story">
+                    <img src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=100&h=150" alt="Beauté">
+                    <div class="story-title">Beauté</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="page" id="home-page">
+            <div class="section-title">
+                <span>Produits Populaires</span>
+                <span>Voir tout <i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="products-grid" id="products-container">
+                <!-- Products will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div class="page hidden" id="categories-page">
+            <div class="section-title">
+                <span>Toutes les Catégories</span>
+            </div>
+            <div class="categories-grid" id="categories-container">
+                <!-- Categories will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- Order Form -->
+        <div class="page hidden" id="order-page">
+            <div class="form-section">
+                <h2 class="form-title">Formulaire de Commande</h2>
+                <div class="form-group">
+                    <label for="fullname">Nom Complet <span style="color: var(--danger)">*</span></label>
+                    <input type="text" id="fullname" placeholder="Votre nom complet">
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse Complète <span style="color: var(--danger)">*</span></label>
+                    <textarea id="address" placeholder="Votre adresse complète" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone <span style="color: var(--danger)">*</span></label>
+                    <input type="tel" id="phone" placeholder="Votre numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="delivery-time">Heure de Livraison</label>
+                    <input type="datetime-local" id="delivery-time">
+                </div>
+                
+                <div class="delivery-info">
+                    <p><span>Frais de livraison:</span> <span>7000 FC</span></p>
+                    <p><span>Mode de paiement:</span> <span>À la réception</span></p>
+                    <p class="total"><span>Total:</span> <span id="order-total">0 FC</span></p>
+                </div>
+                
+                <div class="success-message" id="order-success">
+                    <i class="fas fa-check-circle"></i> Commande passée avec succès! Nous vous contacterons bientôt.
+                </div>
+                
+                <button class="submit-btn" id="submit-order">Passer la commande</button>
+            </div>
+        </div>
+
+        <!-- Admin Login -->
+        <div class="page hidden" id="login-page">
+            <div class="login-container">
+                <h2 class="login-title">Connexion Admin</h2>
+                <div class="login-error" id="login-error">Email ou mot de passe incorrect</div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Votre email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="Votre mot de passe">
+                </div>
+                <button class="submit-btn" id="login-btn">Se connecter</button>
+            </div>
+        </div>
+
+        <!-- Admin Interface -->
+        <div class="page hidden" id="admin-page">
+            <div class="admin-panel">
+                <div class="admin-header">
+                    <h2>Administration Mireb Commercial</h2>
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i> admin@mirebcommercial.com
+                        <button class="btn btn-secondary" id="logout-btn" style="margin-left: 15px;">Déconnexion</button>
+                    </div>
+                </div>
+                
+                <div class="admin-tabs">
+                    <div class="admin-tab active" data-tab="dashboard">Tableau de bord</div>
+                    <div class="admin-tab" data-tab="products">Produits</div>
+                    <div class="admin-tab" data-tab="orders">Commandes</div>
+                    <div class="admin-tab" data-tab="settings">Paramètres</div>
+                    <div class="admin-tab" data-tab="security">Sécurité</div>
+                    <div class="admin-tab" data-tab="theme">Thème</div>
+                </div>
+                
+                <div class="admin-content">
+                    <div class="admin-section active" id="dashboard-section">
+                        <h3>Tableau de Bord</h3>
+                        <div class="admin-grid">
+                            <div class="admin-card">
+                                <h3>Statistiques</h3>
+                                <ul>
+                                    <li>Produits en vente: <span id="products-count">245</span></li>
+                                    <li>Commandes aujourd'hui: <span id="orders-today">24</span></li>
+                                    <li>Visiteurs aujourd'hui: <span id="visitors-today">356</span></li>
+                                    <li>Revenu mensuel: <span id="monthly-revenue">2,450,000 FC</span></li>
+                                </ul>
+                            </div>
+                            <div class="admin-card">
+                                <h3>Dernières Commandes</h3>
+                                <ul id="last-orders">
+                                    <li>CMD-001: En attente</li>
+                                    <li>CMD-002: En livraison</li>
+                                    <li>CMD-003: Livrée</li>
+                                    <li>CMD-004: En attente</li>
+                                    <li>CMD-005: Complétée</li>
+                                </ul>
+                            </div>
+                            <div class="admin-card">
+                                <h3>Infrastructure</h3>
+                                <ul>
+                                    <li>Serveur: <span>Opérationnel</span></li>
+                                    <li>Base de données: <span>Stable</span></li>
+                                    <li>Stockage Cloud: <span>78% utilisé</span></li>
+                                    <li>Sécurité: <span>Niveau élevé</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section" id="products-section">
+                        <h3>Gestion des Produits</h3>
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="product-name">Nom du produit</label>
+                                <input type="text" id="product-name" placeholder="Entrez le nom du produit">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Prix (FC)</label>
+                                <input type="number" id="product-price" placeholder="Entrez le prix">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-category">Catégorie</label>
+                                <select id="product-category">
+                                    <option value="">Sélectionnez une catégorie</option>
+                                    <option value="sante">Santé et beauté</option>
+                                    <option value="biotech">Biotechnologie</option>
+                                    <option value="mode">Mode</option>
+                                    <option value="maison">Maison</option>
+                                    <option value="informatique">Informatique</option>
+                                    <option value="electronique">Électronique</option>
+                                    <option value="accessoires">Accessoires</option>
+                                    <option value="telephone">Téléphone</option>
+                                    <option value="bebe">Bébé</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-image">Image du produit</label>
+                                <input type="file" id="product-image">
+                            </div>
+                            <div class="success-message" id="product-success">
+                                <i class="fas fa-check-circle"></i> Produit ajouté avec succès!
+                            </div>
+                            <button class="submit-btn" id="add-product">Ajouter le produit</button>
+                        </div>
+                        
+                        <h3 style="margin-top: 30px;">Liste des Produits</h3>
+                        <div class="products-grid" id="admin-products-container">
+                            <!-- Product list for admin -->
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section" id="orders-section">
+                        <h3>Gestion des Commandes</h3>
+                        <div class="admin-card">
+                            <ul id="orders-list">
+                                <li><strong>CMD-2023-001</strong>: Smartphone X9 Pro - En attente</li>
+                                <li><strong>CMD-2023-002</strong>: Casque Bluetooth - Expédié</li>
+                                <li><strong>CMD-2023-003</strong>: Montre Connectée - Livré</li>
+                                <li><strong>CMD-2023-004</strong>: Sac à Main Cuir - En traitement</li>
+                                <li><strong>CMD-2023-005</strong>: Chaussures de Sport - Livré</li>
+                            </ul>
+                        </div>
+                        <div class="admin-card" style="margin-top: 20px;">
+                            <h3>Modifier le statut d'une commande</h3>
+                            <div class="form-group">
+                                <label for="order-id">ID Commande</label>
+                                <input type="text" id="order-id" placeholder="Entrez l'ID de la commande">
+                            </div>
+                            <div class="form-group">
+                                <label for="order-status">Nouveau statut</label>
+                                <select id="order-status">
+                                    <option value="pending">En attente</option>
+                                    <option value="processing">En traitement</option>
+                                    <option value="shipped">Expédié</option>
+                                    <option value="delivered">Livré</option>
+                                    <option value="cancelled">Annulé</option>
+                                </select>
+                            </div>
+                            <div class="success-message" id="order-update-success">
+                                <i class="fas fa-check-circle"></i> Statut de commande mis à jour!
+                            </div>
+                            <button class="submit-btn" id="update-order">Mettre à jour</button>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section" id="settings-section">
+                        <h3>Paramètres du Site</h3>
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="site-name">Nom du site</label>
+                                <input type="text" id="site-name" value="Mireb Commercial">
+                            </div>
+                            <div class="form-group">
+                                <label for="currency">Devise par défaut</label>
+                                <select id="currency">
+                                    <option value="FC">Franc Congolais (FC)</option>
+                                    <option value="USD">Dollar US ($)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-fee">Frais de livraison (FC)</label>
+                                <input type="number" id="delivery-fee" value="7000">
+                            </div>
+                            <div class="success-message" id="settings-success">
+                                <i class="fas fa-check-circle"></i> Paramètres enregistrés avec succès!
+                            </div>
+                            <button class="submit-btn" id="save-settings">Enregistrer les paramètres</button>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section" id="security-section">
+                        <h3>Sécurité et Accès</h3>
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="admin-email">Email administrateur</label>
+                                <input type="email" id="admin-email" value="admin@mirebcommercial.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password">Nouveau mot de passe</label>
+                                <input type="password" id="new-password" placeholder="Entrez un nouveau mot de passe">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirmer le mot de passe</label>
+                                <input type="password" id="confirm-password" placeholder="Confirmez le mot de passe">
+                            </div>
+                            <div class="form-group">
+                                <label>Rôles d'accès</label>
+                                <div style="margin-top: 10px;">
+                                    <input type="checkbox" id="role-admin" checked> <label for="role-admin">Administrateur</label><br>
+                                    <input type="checkbox" id="role-editor"> <label for="role-editor">Éditeur</label><br>
+                                    <input type="checkbox" id="role-support"> <label for="role-support">Support</label>
+                                </div>
+                            </div>
+                            <div class="success-message" id="security-success">
+                                <i class="fas fa-check-circle"></i> Paramètres de sécurité mis à jour!
+                            </div>
+                            <button class="submit-btn" id="update-security">Mettre à jour la sécurité</button>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section" id="theme-section">
+                        <h3>Personnalisation du Thème</h3>
+                        <p>Modifiez l'apparence de votre plateforme</p>
+                        
+                        <div class="theme-selector">
+                            <div class="theme-option blue active" data-theme="blue"></div>
+                            <div class="theme-option orange" data-theme="orange"></div>
+                            <div class="theme-option green" data-theme="green"></div>
+                            <div class="theme-option red" data-theme="red"></div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label for="logo-upload">Téléverser un logo</label>
+                            <input type="file" id="logo-upload">
+                        </div>
+                        
+                        <div class="success-message" id="theme-success">
+                            <i class="fas fa-check-circle"></i> Thème enregistré avec succès!
+                        </div>
+                        
+                        <button class="submit-btn" id="save-theme" style="margin-top: 20px;">Enregistrer les modifications</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" data-page="home">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </div>
+        <div class="nav-item" data-page="categories">
+            <i class="fas fa-th-list"></i>
+            <span>Catégories</span>
+        </div>
+        <div class="nav-item" data-page="messages">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </div>
+        <div class="nav-item" data-page="account">
+            <i class="fas fa-user"></i>
+            <span>Compte</span>
+        </div>
+    </div>
+
+    <script>
+        // Product data
+        const products = [
+            { id: 1, name: "Smartphone X9 Pro", price: 125000, category: "Électronique", rating: 4.7, orders: 245, image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=200&h=200" },
+            { id: 2, name: "Casque Bluetooth", price: 35000, category: "Électronique", rating: 4.3, orders: 128, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&h=200" },
+            { id: 3, name: "Montre Connectée", price: 75000, category: "Électronique", rating: 4.5, orders: 89, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&h=200" },
+            { id: 4, name: "Sac à Main Cuir", price: 45000, category: "Mode", rating: 4.2, orders: 56, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=200&h=200" },
+            { id: 5, name: "Chaussures de Sport", price: 55000, category: "Mode", rating: 4.6, orders: 210, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=200&h=200" },
+            { id: 6, name: "Robot Ménager", price: 185000, category: "Maison", rating: 4.8, orders: 75, image: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=200&h=200" },
+            { id: 7, name: "Set de Casseroles", price: 65000, category: "Maison", rating: 4.4, orders: 43, image: "https://images.unsplash.com/photo-1585155770447-2f66e2a397b5?auto=format&fit=crop&w=200&h=200" },
+            { id: 8, name: "Parfum de Luxe", price: 85000, category: "Beauté", rating: 4.9, orders: 120, image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=200&h=200" },
+            { id: 9, name: "Crème Visage", price: 25000, category: "Beauté", rating: 4.1, orders: 98, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=200&h=200" },
+            { id: 10, name: "Ordinateur Portable", price: 450000, category: "Informatique", rating: 4.7, orders: 32, image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=200&h=200" },
+            { id: 11, name: "Imprimante Multifonction", price: 185000, category: "Informatique", rating: 4.0, orders: 21, image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=200&h=200" },
+            { id: 12, name: "Téléviseur 55 Pouces", price: 350000, category: "Électronique", rating: 4.6, orders: 45, image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=200&h=200" },
+            { id: 13, name: "Machine à Café", price: 75000, category: "Maison", rating: 4.3, orders: 67, image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=200&h=200" },
+            { id: 14, name: "Veste en Cuir", price: 95000, category: "Mode", rating: 4.5, orders: 89, image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=200&h=200" },
+            { id: 15, name: "Table de Cuisine", price: 120000, category: "Maison", rating: 4.2, orders: 23, image: "https://images.unsplash.com/photo-1556911220-ef412ae179a9?auto=format&fit=crop&w=200&h=200" },
+            { id: 16, name: "Kit Maquillage", price: 35000, category: "Beauté", rating: 4.7, orders: 156, image: "https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?auto=format&fit=crop&w=200&h=200" },
+            { id: 17, name: "Drone HD", price: 285000, category: "Électronique", rating: 4.8, orders: 34, image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?auto=format&fit=crop&w=200&h=200" },
+            { id: 18, name: "Chaise Ergonomique", price: 65000, category: "Bureau", rating: 4.4, orders: 78, image: "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=200&h=200" },
+            { id: 19, name: "Lunettes de Soleil", price: 25000, category: "Accessoires", rating: 4.1, orders: 112, image: "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=200&h=200" },
+            { id: 20, name: "Enceinte Bluetooth", price: 45000, category: "Électronique", rating: 4.6, orders: 143, image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=200&h=200" }
+        ];
+
+        // Categories data
+        const categories = [
+            { id: 1, name: "Santé et beauté", icon: "fas fa-spa" },
+            { id: 2, name: "Biotechnologie", icon: "fas fa-dna" },
+            { id: 3, name: "Mode", icon: "fas fa-tshirt" },
+            { id: 4, name: "Maison", icon: "fas fa-home" },
+            { id: 5, name: "Informatique", icon: "fas fa-laptop" },
+            { id: 6, name: "Électronique", icon: "fas fa-plug" },
+            { id: 7, name: "Accessoires", icon: "fas fa-umbrella-beach" },
+            { id: 8, name: "Téléphone", icon: "fas fa-mobile-alt" },
+            { id: 9, name: "Bébé", icon: "fas fa-baby" },
+            { id: 10, name: "Alimentation", icon: "fas fa-utensils" },
+            { id: 11, name: "Sport", icon: "fas fa-running" },
+            { id: 12, name: "Automobile", icon: "fas fa-car" }
+        ];
+
+        // Admin credentials
+        const ADMIN_EMAIL = "mirebcommercial@gmail.com";
+        const ADMIN_PASSWORD = "Fiacre19";
+
+        // Selected options
+        let selectedLanguage = "Français";
+        let selectedCurrency = "Franc Congolais (FC)";
+        let selectedRegion = "Kinshasa";
+        let selectedSupplier = "Tous les fournisseurs";
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate products and categories
+            renderProducts();
+            renderCategories();
+            renderAdminProducts();
+            
+            // Navigation event listeners
+            setupNavigation();
+            
+            // Admin tab switching
+            setupAdminTabs();
+            
+            // Theme selector
+            setupThemeSelector();
+            
+            // Login functionality
+            setupLogin();
+            
+            // Initialize pages
+            showPage('home');
+            
+            // Setup dropdown selections
+            setupDropdowns();
+            
+            // Setup search functionality
+            document.getElementById('search-btn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                if (searchTerm) {
+                    const filteredProducts = products.filter(product => 
+                        product.name.toLowerCase().includes(searchTerm) || 
+                        product.category.toLowerCase().includes(searchTerm)
+                    );
+                    renderProducts(filteredProducts);
+                } else {
+                    renderProducts();
+                }
+            });
+            
+            // Setup order submission
+            document.getElementById('submit-order').addEventListener('click', function() {
+                const fullname = document.getElementById('fullname').value;
+                const address = document.getElementById('address').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!fullname || !address || !phone) {
+                    alert('Veuillez remplir tous les champs obligatoires');
+                    return;
+                }
+                
+                document.getElementById('order-success').style.display = 'block';
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('fullname').value = '';
+                    document.getElementById('address').value = '';
+                    document.getElementById('phone').value = '';
+                    document.getElementById('delivery-time').value = '';
+                    document.getElementById('order-success').style.display = 'none';
+                    
+                    showPage('home');
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    document.querySelector('.nav-item[data-page="home"]').classList.add('active');
+                }, 3000);
+            });
+            
+            // Setup admin functionality
+            document.getElementById('add-product').addEventListener('click', function() {
+                const name = document.getElementById('product-name').value;
+                const price = document.getElementById('product-price').value;
+                const category = document.getElementById('product-category').value;
+                
+                if (!name || !price || !category) {
+                    alert('Veuillez remplir tous les champs');
+                    return;
+                }
+                
+                document.getElementById('product-success').style.display = 'block';
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('product-name').value = '';
+                    document.getElementById('product-price').value = '';
+                    document.getElementById('product-category').value = '';
+                    document.getElementById('product-image').value = '';
+                    document.getElementById('product-success').style.display = 'none';
+                }, 3000);
+            });
+            
+            document.getElementById('save-settings').addEventListener('click', function() {
+                document.getElementById('settings-success').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('settings-success').style.display = 'none';
+                }, 3000);
+            });
+            
+            document.getElementById('update-security').addEventListener('click', function() {
+                document.getElementById('security-success').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('security-success').style.display = 'none';
+                }, 3000);
+            });
+            
+            document.getElementById('save-theme').addEventListener('click', function() {
+                document.getElementById('theme-success').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('theme-success').style.display = 'none';
+                }, 3000);
+            });
+            
+            document.getElementById('update-order').addEventListener('click', function() {
+                document.getElementById('order-update-success').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('order-update-success').style.display = 'none';
+                    document.getElementById('order-id').value = '';
+                    document.getElementById('order-status').value = 'pending';
+                }, 3000);
+            });
+        });
+
+        // Render products to the grid
+        function renderProducts(productsToRender = products) {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:20px">Aucun produit trouvé</p>';
+                return;
+            }
+            
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200x200?text=Produit'">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price.toLocaleString()} FC</div>
+                        <div class="product-meta">
+                            <span>${product.category}</span>
+                            <span>${product.rating} <i class="fas fa-star"></i></span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="showOrderForm(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> Commander
+                            </button>
+                            <button class="btn btn-secondary" onclick="showProductDetails(${product.id})">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        // Render products for admin
+        function renderAdminProducts() {
+            const container = document.getElementById('admin-products-container');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200x200?text=Produit'">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price.toLocaleString()} FC</div>
+                        <div class="product-meta">
+                            <span>${product.category}</span>
+                            <span>ID: ${product.id}</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        // Render categories
+        function renderCategories() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+            
+            categories.forEach(category => {
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'category-card';
+                categoryCard.innerHTML = `
+                    <div class="category-icon">
+                        <i class="${category.icon}"></i>
+                    </div>
+                    <div class="category-name">${category.name}</div>
+                `;
+                categoryCard.addEventListener('click', function() {
+                    const filteredProducts = products.filter(p => p.category === category.name);
+                    renderProducts(filteredProducts);
+                    showPage('home');
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    document.querySelector('.nav-item[data-page="home"]').classList.add('active');
+                });
+                container.appendChild(categoryCard);
+            });
+        }
+
+        // Show order form for a product
+        function showOrderForm(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                document.getElementById('order-total').textContent = (product.price + 7000).toLocaleString() + ' FC';
+                showPage('order');
+            }
+        }
+
+        // Show product details
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                alert(`Détails du produit:\n\nNom: ${product.name}\nPrix: ${product.price.toLocaleString()} FC\nCatégorie: ${product.category}\nNote: ${product.rating}/5.0\nCommandes: ${product.orders}`);
+            }
+        }
+
+        // Show a specific page
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(`${pageId}-page`).classList.remove('hidden');
+            
+            // Update bottom navigation
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            if (pageId === 'admin' || pageId === 'login' || pageId === 'order') {
+                // Don't activate any nav item for admin or order pages
+            } else {
+                const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+                if (navItem) navItem.classList.add('active');
+            }
+        }
+
+        // Setup navigation
+        function setupNavigation() {
+            // Bottom navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    
+                    if (page === 'account') {
+                        // For account page, show login if not authenticated
+                        if (localStorage.getItem('adminLoggedIn')) {
+                            showPage('admin');
+                        } else {
+                            showPage('login');
+                        }
+                    } else if (page === 'messages') {
+                        // Open WhatsApp chat
+                        window.open('https://wa.me/243842267252', '_blank');
+                    } else {
+                        showPage(page);
+                    }
+                });
+            });
+        }
+
+        // Setup admin tabs
+        function setupAdminTabs() {
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                    
+                    // Show selected section
+                    document.getElementById(`${tabId}-section`).classList.add('active');
+                });
+            });
+            
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('adminLoggedIn');
+                showPage('home');
+                document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                document.querySelector('.nav-item[data-page="home"]').classList.add('active');
+            });
+        }
+
+        // Setup theme selector
+        function setupThemeSelector() {
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    
+                    // Remove active class from all
+                    document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('active'));
+                    
+                    // Add active class to clicked
+                    this.classList.add('active');
+                    
+                    // Change theme colors
+                    switch(theme) {
+                        case 'blue':
+                            document.documentElement.style.setProperty('--primary', '#1e88e5');
+                            document.documentElement.style.setProperty('--secondary', '#0d47a1');
+                            break;
+                        case 'orange':
+                            document.documentElement.style.setProperty('--primary', '#ff9800');
+                            document.documentElement.style.setProperty('--secondary', '#f57c00');
+                            break;
+                        case 'green':
+                            document.documentElement.style.setProperty('--primary', '#4caf50');
+                            document.documentElement.style.setProperty('--secondary', '#2e7d32');
+                            break;
+                        case 'red':
+                            document.documentElement.style.setProperty('--primary', '#f44336');
+                            document.documentElement.style.setProperty('--secondary', '#d32f2f');
+                            break;
+                    }
+                });
+            });
+        }
+
+        // Setup login functionality
+        function setupLogin() {
+            document.getElementById('login-btn').addEventListener('click', function() {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const error = document.getElementById('login-error');
+                
+                if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    showPage('admin');
+                    error.style.display = 'none';
+                } else {
+                    error.style.display = 'block';
+                }
+            });
+        }
+        
+        // Setup dropdown selections
+        function setupDropdowns() {
+            // Language dropdown
+            document.querySelectorAll('.option-dropdown .option-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const dropdown = this.closest('.option-dropdown');
+                    const option = this.closest('.option');
+                    
+                    // Remove active class from all items
+                    dropdown.querySelectorAll('.option-item').forEach(i => i.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Update option text
+                    const text = this.textContent;
+                    option.querySelector('span').textContent = text.split(' ')[0];
+                    
+                    // Store selection
+                    if (option.querySelector('.fa-globe')) {
+                        selectedLanguage = text;
+                    } else if (option.querySelector('.fa-dollar-sign')) {
+                        selectedCurrency = text;
+                    } else if (option.querySelector('.fa-map-marker-alt')) {
+                        selectedRegion = text;
+                    } else if (option.querySelector('.fa-truck')) {
+                        selectedSupplier = text;
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
